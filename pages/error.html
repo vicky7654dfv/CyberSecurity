@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error - Page Not Found</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/error.css">
+</head>
+<body>
+    <!-- Global Page Loader -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <div class="error-container">
+        <!-- Static Logo -->
+        <div class="logo-wrapper fade-in-up">
+            <img src="../assets/Home1/Header/logo.webp" alt="Cyber Security Logo" class="static-logo" onerror="this.src='https://via.placeholder.com/200x50/0B0F19/00B8FF?text=Cyber+Security'">
+        </div>
+        
+        <div class="error-content fade-in-up" style="transition-delay: 0.2s;">
+            <h1 class="error-code">404</h1>
+            <div class="glitch-wrapper">
+                <h2 class="error-message">Access Denied: Sector Not Found</h2>
+            </div>
+            <p class="error-description">The digital node you are attempting to infiltrate does not exist on this server. It may have been relocated, encrypted, or permanently purged from our database.</p>
+            
+            <a href="../index.html" class="btn btn-primary return-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Return Home
+            </a>
+        </div>
+
+        <div class="cyber-decorations">
+            <div class="cyber-line line-1"></div>
+            <div class="cyber-line line-2"></div>
+            <div class="cyber-dot dot-1"></div>
+            <div class="cyber-dot dot-2"></div>
+        </div>
+    </div>
+
+    <!-- Interactive Logic -->
+    <script>
+        // 1. Theme Configuration
+        const htmlDoc = document.documentElement;
+        
+        // Initialize theme from local storage
+        const savedTheme = localStorage.getItem('site_theme') || 'dark';
+        htmlDoc.setAttribute('data-theme', savedTheme);
+
+        // 2. Global Loader
+        const loader = document.getElementById('loader');
+        
+        function hideLoader() {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 500);
+        }
+
+        function showLoader() {
+            loader.style.display = 'flex';
+            // Force reflow
+            void loader.offsetWidth;
+            loader.style.opacity = '1';
+        }
+
+        window.addEventListener('load', hideLoader);
+
+        // Hide loader when page is loaded from back/forward cache
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                hideLoader();
+            }
+        });
+
+        // Show loader when clicking valid navigation links
+        document.querySelectorAll('a[href]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                const target = link.getAttribute('target');
+                
+                // Allow hash links, JS links, empty links, and new tabs without loader
+                if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank') {
+                    showLoader();
+                }
+            });
+        });
+
+        // 3. Fade-In Animation on Load
+        setTimeout(() => {
+            document.querySelectorAll('.fade-in-up').forEach(el => {
+                el.classList.add('visible');
+            });
+        }, 100);
+    </script>
+</body>
+</html>
