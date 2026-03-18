@@ -1,0 +1,587 @@
+/* ==========================================================================
+   About Page Styles
+   Theme: Bio-tech / Cyber Defense
+   Dependent on: style.css for variables and common components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   NORMAL DESKTOP CSS
+   -------------------------------------------------------------------------- */
+
+/* SECTION 1: HERO CAROUSEL */
+.about-hero {
+    position: relative;
+    height: calc(100vh - var(--header-height));
+    margin-top: var(--header-height);
+    overflow: hidden;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-body);
+}
+
+.carousel-track {
+    position: absolute;
+    top: 0; left: 0;
+    width: 200%; /* For 2 slides side-by-side or crossfade */
+    height: 100%;
+    z-index: 1;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    /* Smooth cinematic crossfade */
+    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+.carousel-slide img {
+    height: 900px;
+    object-fit: cover;
+    transition: transform 6s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Make low-res images look much crispier */
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    filter: contrast(1.15) saturate(1.1);
+}
+
+.carousel-slide.active img {
+    transform: scale(1);
+}
+
+.carousel-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(5, 11, 20, 0.6) 0%, rgba(5, 11, 20, 0.6) 100%);
+    z-index: 3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 4;
+    max-width: 800px;
+    color: #FFFFFF;
+}
+
+/* Carousel Control Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    background-color: rgba(5, 11, 20, 0.6);
+    color: #FFFFFF;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    width: 50px; height: 50px;
+    display: flex;
+    justify-content: center; align-items: center;
+    transition: var(--transition-base);
+}
+.carousel-btn:hover {
+    background-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+.carousel-btn.prev {
+    left: 20px;
+}
+.carousel-btn.next {
+    right: 20px;
+}
+.about-hero .hero-cta {
+    margin-top: 2.5rem;
+}
+
+
+/* SECTION 2: FOUNDERS GRID */
+.founders-section {
+    background-color: var(--bg-surface);
+}
+.founders-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+}
+.founder-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: var(--bg-surface-alt);
+    padding: 6px;
+    /* Live Border via padding + gradient bg */
+    background: linear-gradient(45deg, var(--primary), var(--bg-surface), var(--primary));
+    background-size: 200% 200%;
+    animation: liveBorderAnim 3s ease infinite;
+    transition: var(--transition-base);
+}
+.founder-card-inner {
+    position: relative;
+    background-color: var(--bg-surface-alt);
+    border-radius: 8px;
+    height: 100%;
+    overflow: hidden;
+}
+.founder-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--card-shadow);
+}
+.founder-card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    object-position: top center;
+    transition: var(--transition-base);
+}
+.founder-info {
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--bg-surface-alt);
+    transition: var(--transition-base);
+}
+.founder-info h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+.founder-social {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    height: 100%; /* Cover entire inner div */
+    background-color: var(--bg-surface); /* Solid dark theme color as requested */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 2; /* Ensure rendering cleanly over image */
+}
+.founder-card-inner:hover .founder-social {
+    opacity: 0.95;
+    visibility: visible;
+}
+.founder-social a {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    width: 45px; height: 45px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    display: flex; justify-content: center; align-items: center;
+}
+.founder-card-inner:hover .founder-social a {
+    transform: translateY(0);
+}
+.founder-social a:hover {
+    background-color: #FFFFFF;
+    color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* SECTION 3: VISION & MISSION */
+.vision-mission-section {
+    background-color: var(--bg-body);
+}
+.vm-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin-bottom: 5rem;
+    align-items: center;
+}
+.vm-grid.reverse {
+    direction: rtl;
+}
+.vm-grid.reverse > * {
+    direction: ltr; /* Reset direction for content */
+}
+.vm-image-container {
+    padding: 6px;
+    border-radius: 12px;
+    background: linear-gradient(45deg, var(--primary), var(--bg-surface), var(--primary));
+    background-size: 200% 200%;
+    animation: liveBorderAnim 3s ease infinite;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.vm-image-container img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: var(--transition-base);
+}
+.vm-image-hover {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 11, 20, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; visibility: hidden;
+    transition: var(--transition-base);
+    border-radius: 8px;
+}
+.vm-image-container:hover .vm-image-hover {
+    opacity: 1; visibility: visible;
+}
+.vm-image-container:hover img {
+    transform: scale(1.05); filter: blur(3px);
+}
+.vm-content {
+    background-color: var(--bg-surface-alt);
+    padding: 3rem;
+    border-radius: 12px;
+    border: 3px solid var(--primary); /* Fixed colored border */
+    box-shadow: var(--card-shadow);
+}
+.vm-content h1 {
+    font-size: 2.2rem;
+    color: var(--primary);
+}
+.vm-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.history-text-content {
+    background-color: var(--bg-surface-alt);
+    border-left: 4px solid var(--primary);
+    padding: 2.5rem 3rem;
+    border-radius: 0 12px 12px 0;
+    box-shadow: var(--card-shadow);
+}
+.h-text-primary {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+.h-text-secondary {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+}
+
+/* SECTION 4: HISTORY & DEVELOPMENT */
+.history-section {
+    background-color: var(--bg-surface);
+}
+.history-container {
+    padding: 6px;
+    border-radius: 16px;
+    background: linear-gradient(45deg, var(--primary), var(--bg-surface), var(--primary));
+    background-size: 200% 200%;
+    animation: liveBorderAnim 3s ease infinite;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+.history-inner {
+    border-radius: 12px;
+    background-color: var(--bg-body);
+    position: relative;
+    min-height: 500px;
+    overflow: hidden;
+}
+.history-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+    transition: var(--transition-base);
+}
+.history-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 11, 20, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3rem;
+    transition: var(--transition-base);
+}
+.history-title {
+    font-size: 3rem;
+    color: #FFFFFF;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Cartoon based live CSS effect */
+    text-shadow: 2px 2px 0 var(--primary), -2px -2px 0 var(--primary), 3px 3px 10px rgba(0,0,0,0.8);
+    animation: cartoonFloat 3s ease-in-out infinite;
+}
+@keyframes cartoonFloat {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+}
+.history-hover-content {
+    position: absolute;
+    bottom: 30px; left: 50%;
+    transform: translate(-50%, 20px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    z-index: 10;
+}
+/* Hover Interactions */
+.history-inner:hover .history-overlay {
+    background: rgba(5, 11, 20, 0.85);
+}
+.history-inner:hover .history-img {
+    transform: scale(1.1);
+    filter: blur(5px);
+}
+.history-inner:hover .history-title {
+    transform: translateY(-40px) scale(0.9);
+    opacity: 0.7;
+    animation-play-state: paused;
+}
+.history-inner:hover .history-hover-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0px);
+}
+
+/* SECTION 5: TESTIMONIALS */
+.testimonials-section {
+    background-color: var(--bg-body);
+    overflow: hidden;
+}
+.testimonials-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 0;
+}
+/* Marquee implementations for identical loop */
+.testimonials-track {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+}
+.track-1 {
+    animation: marqueeLeft 60s linear infinite; /* Slowed down duration since track is longer */
+}
+
+@keyframes marqueeLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 1.5rem)); }
+}
+
+.testimonials-track:hover {
+    animation-play-state: paused;
+}
+
+.testimonial-card {
+    background-color: var(--bg-surface);
+    padding: 3rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    width: 500px;
+    flex-shrink: 0;
+    transform: translateY(0);
+    transition: all 0.5s ease-out;
+}
+.testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: -100%; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(180deg, var(--primary-glow) 0%, transparent 100%);
+    transition: top 0.5s ease-out;
+    z-index: 0;
+}
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.testimonial-card:hover::before {
+    top: 0;
+}
+.testimonial-content {
+    position: relative;
+    z-index: 1;
+}
+.testimonial-notation {
+    font-size: 4rem;
+    color: var(--primary);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: -20px;
+    font-family: serif;
+}
+.testimonial-card p {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    position: relative;
+}
+.testimonial-author {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.testimonial-author h1 {
+    font-size: 1.3rem;
+    margin-bottom: 0px;
+}
+.testimonial-author-role {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+.colored-link {
+    color: var(--primary);
+    font-weight: 600;
+    transition: var(--transition-base);
+}
+.colored-link:hover {
+    color: #FFFFFF;
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+.testimonial-btn {
+    margin-top: 1.5rem;
+}
+
+
+/* ==========================================================================
+   STRICT MEDIA QUERIES
+   ========================================================================== */
+
+/* 1. 1024px */
+@media (max-width: 1024px) {
+    .founders-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .vm-content {
+        padding: 2rem;
+    }
+    .vm-grid {
+        gap: 2rem;
+    }
+}
+
+/* 2. 768px */
+@media (max-width: 768px) {
+    .about-hero {
+        text-align: center;
+    }
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .about-hero .hero-cta {
+        justify-content: center;
+    }
+    .founders-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .vm-grid, .vm-grid.reverse {
+        grid-template-columns: 1fr;
+        direction: ltr; /* Reset to normal stack */
+    }
+    .vm-content {
+        margin-top: -20px;
+        position: relative;
+        z-index: 2;
+    }
+    .history-title {
+        font-size: 2.2rem;
+    }
+    .testimonials-track {
+        gap: 1.5rem;
+    }
+    .testimonial-card {
+        width: 350px;
+        padding: 2rem;
+    }
+    @keyframes marqueeLeft {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 0.75rem)); }
+    }
+}
+
+/* 3. 425.6px */
+@media (max-width: 425.6px) {
+    .hero-content {
+        padding: 0 40px; /* Prevent button overlap on mobile */
+    }
+    .carousel-btn {
+        width: 40px; height: 40px;
+        font-size: 0.8rem;
+    }
+    .carousel-btn.prev {
+        top: 25rem;
+        left: 10px;
+    }
+    .carousel-btn.next {
+        top: 25rem;
+        right: 10px;
+    }
+    .vm-actions {
+        flex-direction: column;
+    }
+    .vm-actions .btn {
+        width: 100%;
+    }
+    .history-title {
+        font-size: 1.8rem;
+    }
+    .testimonial-card {
+        padding: 2rem;
+    }
+    .testimonial-author {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+/* 4. 375.2px */
+@media (max-width: 375.2px) {
+    
+    .carousel-btn.prev {
+        top: 23rem;
+        left: 10px;
+    }
+    .carousel-btn.next {
+        top: 23rem;
+        right: 10px;
+    }
+    .founder-info h1 {
+        font-size: 1.3rem;
+    }
+    .vm-content h1 {
+        font-size: 1.8rem;
+    }
+    .history-overlay {
+        padding: 1.5rem;
+    }
+    .testimonial-card p {
+        font-size: 1rem;
+    }
+}
