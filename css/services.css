@@ -4,17 +4,8 @@
    Dependent on: style.css for variables and common components
    ========================================================================== */
 
-/* Overriding footer variable per theme */
-[data-theme="light"] {
-    --footer-bg: #f4f4f5;
-}
-[data-theme="dark"] {
-    --footer-bg: #0b0c10;
-}
-
-.footer {
-    background-color: var(--footer-bg, var(--bg-surface));
-}
+/* Services page uses the same footer colors as index.html via style.css */
+/* .footer → var(--bg-surface), .mini-footer → var(--bg-body) — no overrides needed */
 
 /* --------------------------------------------------------------------------
    NORMAL DESKTOP CSS
