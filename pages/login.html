@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Cyber Security Services</title>
+    <meta name="description" content="Login to access your Cyber Security Services dashboard.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="login-page-body">
+
+    <!-- Global Page Loader -->
+    <div class="loader-overlay" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Scroll to Top Button (Hidden inside split screen, but script requires it) -->
+    <button id="scrollTopBtn" aria-label="Scroll to top" title="Scroll to top" style="display:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+
+    <!-- Background Image with Fixed Dark Overlay -->
+    <div class="login-bg-layer">
+        <img src="../assets/SignUp/signupBg.webp" alt="Background" class="login-bg-image">
+        <div class="login-bg-overlay"></div>
+    </div>
+
+    <!-- Split Screen Wrapper -->
+    <div class="login-wrapper">
+        
+        <!-- ── Left Column (Content) ── -->
+        <div class="login-col-left fade-in-up">
+            <!-- Return Home Button -->
+            <a href="../index.html" class="btn-return-home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Return Home
+            </a>
+
+            <div class="left-content-inner">
+                <a href="../index.html" class="login-logo">
+                    <img src="../assets/Home1/Header/logo.webp" alt="Stackly Cyber Security Logo" id="loginLogoImg">
+                </a>
+                
+                <div class="left-text-block">
+                    <h3 class="login-heading">Welcome Back to Security Control</h3>
+                    <p class="login-para">Log in to enter your secure environment. Monitor threats, manage system configurations, and review active network defenses in real time through your dedicated dashboard terminal.</p>
+                </div>
+                
+                <!-- Count-Up stats snippet inside left col -->
+                <div class="login-stats">
+                    <div class="stat-box count-box">
+                        <span class="stat-num count-up" data-val="99.9">0</span><span class="stat-suffix">%</span>
+                        <span class="stat-label">Uptime Security</span>
+                    </div>
+                    <div class="stat-box count-box">
+                        <span class="stat-num count-up" data-val="500">0</span><span class="stat-suffix">+</span>
+                        <span class="stat-label">Enterprise Clients</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ── Smooth Separator Line ── -->
+        <div class="login-separator"></div>
+
+        <!-- ── Right Column (Form Box) ── -->
+        <div class="login-col-right fade-in-up">
+            <div class="login-glass-card">
+                <h2>Account Login</h2>
+                <p class="form-subheading">Enter your credentials to access the portal.</p>
+
+                <form id="loginForm" class="login-form" novalidate>
+                    
+                    <!-- Role Dropdown -->
+                    <div class="form-group form-group-full">
+                        <label for="logRole">Account Type <span class="req">*</span></label>
+                        <div class="custom-select-wrap">
+                            <select id="logRole" name="logRole" autocomplete="off" required>
+                                <option value="" disabled selected>Choose administrator or client</option>
+                                <option value="administrator">Administrator</option>
+                                <option value="client">Client</option>
+                            </select>
+                        </div>
+                        <span class="error-msg" id="err-logRole" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group form-group-full">
+                        <label for="logEmail">Email Address <span class="req">*</span></label>
+                        <input type="email" id="logEmail" name="logEmail" placeholder="you@company.com" autocomplete="email" required>
+                        <span class="error-msg" id="err-logEmail" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group form-group-full">
+                        <label for="logPass">Password <span class="req">*</span></label>
+                        <div class="password-wrap">
+                            <input type="password" id="logPass" name="logPass" placeholder="Enter your password" autocomplete="current-password" required>
+                            <button type="button" class="eye-toggle-btn" aria-label="Toggle password visibility" data-target="logPass">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" class="icon-eye" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" class="icon-eye-off" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"/></svg>
+                            </button>
+                        </div>
+                        <span class="error-msg" id="err-logPass" aria-live="polite"></span>
+                    </div>
+
+                    <!-- Options: Remember Me & Forgot Password -->
+                    <div class="form-options-row">
+                        <div class="radio-wrap">
+                            <label class="radio-label">
+                                <input type="checkbox" name="logRemember" id="logRemember">
+                                <span class="radio-custom"></span>
+                                <span class="tc-text">Remember me</span>
+                            </label>
+                        </div>
+                        <a href="./error.html" class="forgot-pass-link text-link">Forgot Password?</a>
+                    </div>
+
+                    <!-- Submit Actions -->
+                    <button type="submit" class="btn btn-primary btn-submit-full" id="loginBtn">
+                        Sign In Securely
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    </button>
+
+                    <p class="login-link-para">
+                        Don't have an account? <a href="./signup.html" class="text-link">Sign up</a>
+                    </p>
+
+                </form>
+            </div>
+        </div>
+
+    </div><!-- /login-wrapper -->
+
+    <!-- Scripts -->
+    <script>
+        // ── 1. Theme Configuration (Read Only) ──────────────────────────────
+        // The login page uses a fixed dark background image layout,
+        // but inputs/cards will respect the global theme setting.
+        const htmlDoc = document.documentElement;
+        const savedTheme = localStorage.getItem('site_theme') || 'dark';
+        htmlDoc.setAttribute('data-theme', savedTheme);
+
+        // ── 2. Loader & Transition ──────────────────────────────────────────
+        const loader = document.getElementById('loader');
+        function hideLoader() {
+            loader.style.opacity = '0';
+            setTimeout(() => { loader.style.display = 'none'; }, 500);
+        }
+        function showLoader() {
+            loader.style.display = 'flex';
+            void loader.offsetWidth;
+            loader.style.opacity = '1';
+        }
+        window.addEventListener('load', hideLoader);
+        window.addEventListener('pageshow', (e) => { if (e.persisted) hideLoader(); });
+        
+        // Loader on normal links
+        document.querySelectorAll('a[href]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                const target = link.getAttribute('target');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank') {
+                    showLoader();
+                }
+            });
+        });
+
+        // ── 3. Fade-In and Count-Up ─────────────────────────────────────────
+        const fadeEls = document.querySelectorAll('.fade-in-up');
+        const fadeObs = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        fadeEls.forEach(el => fadeObs.observe(el));
+
+        const countEls = document.querySelectorAll('.count-up');
+        let counted = false;
+        if (countEls.length > 0) {
+            const countObs = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !counted) {
+                    counted = true;
+                    countEls.forEach(el => {
+                        const target = parseFloat(el.getAttribute('data-val'));
+                        const isDecimal = target % 1 !== 0;
+                        const steps = 60;
+                        const stepVal = target / steps;
+                        let cur = 0;
+                        const timer = setInterval(() => {
+                            cur += stepVal;
+                            if (cur >= target) { cur = target; clearInterval(timer); }
+                            el.innerText = isDecimal ? cur.toFixed(1) : Math.floor(cur);
+                        }, 2000 / steps);
+                    });
+                }
+            }, { threshold: 0.1 });
+            const leftCol = document.querySelector('.login-col-left');
+            if (leftCol) countObs.observe(leftCol);
+        }
+
+        // ── 3.5 Password Eye Toggle ─────────────────────────────────────────
+        const eyeBtns = document.querySelectorAll('.eye-toggle-btn');
+        eyeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const targetInput = document.getElementById(targetId);
+                const iconEye = btn.querySelector('.icon-eye');
+                const iconEyeOff = btn.querySelector('.icon-eye-off');
+
+                if(targetInput.type === 'password') {
+                    targetInput.type = 'text';
+                    iconEye.style.display = 'none';
+                    iconEyeOff.style.display = 'block';
+                } else {
+                    targetInput.type = 'password';
+                    iconEye.style.display = 'block';
+                    iconEyeOff.style.display = 'none';
+                }
+            });
+        });
+
+        // ── 4. Form Validation & Login Logic ────────────────────────────────
+        const form = document.getElementById('loginForm');
+
+        function clearErrors() {
+            document.querySelectorAll('.error-msg').forEach(el => el.innerText = '');
+            document.querySelectorAll('.input-err').forEach(el => el.classList.remove('input-err'));
+        }
+
+        function showError(idStr, msg) {
+            const el = document.getElementById(idStr);
+            const errEl = document.getElementById('err-' + idStr);
+            if(el) el.classList.add('input-err');
+            if(errEl) errEl.innerText = msg;
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            clearErrors();
+            let valid = true;
+
+            // 1. Role Dropdown
+            const roleEl = document.getElementById('logRole');
+            if(!roleEl.value) {
+                showError('logRole', 'Please select your role.'); valid = false;
+            }
+
+            // 2. Email Check
+            const emailVal = document.getElementById('logEmail').value.trim();
+            const emailReg = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\.[a-zA-Z]{2,}$/;
+            if(!emailVal) {
+                showError('logEmail', 'Email Address is required.'); valid = false;
+            } else if(!emailReg.test(emailVal)) {
+                showError('logEmail', 'Enter a valid email address.'); valid = false;
+            }
+
+            // 3. Password Check (Match signup logic)
+            const passVal = document.getElementById('logPass').value;
+            const passReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+            if(!passVal) {
+                showError('logPass', 'Password is required.'); valid = false;
+            } else if(!passReg.test(passVal)) {
+                showError('logPass', 'Incorrect format (min 8 char, upper, lower, num, spec).'); valid = false;
+            }
+
+            // Final check & routing
+            if(valid) {
+                // Save data to localStorage to carry over into Dashboard
+                localStorage.setItem('loggedInEmail', emailVal);
+                localStorage.setItem('loggedInRole', roleEl.value);
+
+                // Show loader transition
+                showLoader();
+                
+                // Redirect based on selected role
+                setTimeout(() => {
+                    if(roleEl.value === 'administrator') {
+                        window.location.href = './adminDashboard.html';
+                    } else {
+                        window.location.href = './clientDashboard.html';
+                    }
+                }, 800);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,665 @@
+/* ==========================================================================
+   Login Page Stylesheet — login.css
+   Special layout overriding root styles for a full-screen, 2-col app setup
+   (Structure directly matches signup.css for exact page alignment)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   GLOBAL OVERRIDES (For this page only)
+   -------------------------------------------------------------------------- */
+.login-page-body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: var(--font-main);
+    background-color: #030712; /* Dark fallback */
+    overflow-x: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   BACKGROUND LAYER
+   -------------------------------------------------------------------------- */
+.login-bg-layer {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.login-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+}
+
+.login-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(3,7,18,0.6) 0%, rgba(5,11,20,0.8) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   MAIN WRAPPER & SPLIT SCREEN
+   -------------------------------------------------------------------------- */
+.login-wrapper {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.login-col-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 4rem;
+    position: relative;
+}
+
+.login-col-right {
+    flex: 1.1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 4rem;
+}
+
+/* ── Smooth Vertical Separator ── */
+.login-separator {
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, rgba(0,184,255,0.4), transparent);
+    height: auto;
+    margin: 4rem 0;
+    box-shadow: 0 0 10px rgba(0,184,255,0.2);
+}
+
+/* --------------------------------------------------------------------------
+   LEFT COLUMN CONTENT
+   -------------------------------------------------------------------------- */
+.btn-return-home {
+    position: absolute;
+    top: 2rem;
+    left: 4rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 50px;
+    backdrop-filter: blur(8px);
+    transition: var(--transition-base);
+}
+.btn-return-home:hover {
+    background: rgba(0,184,255,0.1);
+    border-color: var(--primary);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.left-content-inner {
+    max-width: 500px;
+    margin-top: 2rem;
+}
+
+.login-logo {
+    display: block;
+    margin-bottom: 3rem;
+    width: max-content;
+}
+.login-logo img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+}
+
+.login-heading {
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+}
+
+.login-para {
+    font-size: 1.05rem;
+    color: #e2e2e2;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+}
+
+.login-stats {
+    display: flex;
+    gap: 3rem;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-num {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.1;
+}
+.stat-suffix {
+    font-size: 1.4rem;
+    color: var(--primary);
+    font-weight: 700;
+}
+.stat-label {
+    font-size: 0.88rem;
+    color: #b848a2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0.3rem;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   RIGHT COLUMN (FORM CARD)
+   -------------------------------------------------------------------------- */
+.login-glass-card {
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3.5rem 3rem;
+    width: 100%;
+    max-width: 500px; /* slightly smaller than signup */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Inner glow ring on card border */
+.login-glass-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(0,184,255,0.4) 0%, transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.login-glass-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.form-subheading {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   FORM FIELDS & VALIDATION
+   -------------------------------------------------------------------------- */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.form-group-full {
+    width: 100%;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    letter-spacing: 0.3px;
+}
+.req {
+    color: var(--primary);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="password"],
+.custom-select-wrap select {
+    width: 100%;
+    background: rgba(5,11,20,0.6);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.custom-select-wrap {
+    position: relative;
+    width: 100%;
+}
+.custom-select-wrap select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 40px;
+}
+.custom-select-wrap::after {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300B8FF' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+.custom-select-wrap select option {
+    background: #0f172a;
+    color: #fff;
+}
+
+/* State changes */
+.form-group input:focus,
+.custom-select-wrap select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0,184,255,0.15);
+    background: rgba(5,11,20,0.8);
+}
+
+.form-group input.input-err,
+.custom-select-wrap select.input-err {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+}
+
+.error-msg {
+    font-size: 0.78rem;
+    color: #ef4444;
+    min-height: 1rem;
+    display: block;
+}
+
+/* Password Visibility Toggle */
+.password-wrap {
+    position: relative;
+    width: 100%;
+}
+.password-wrap input {
+    padding-right: 44px !important;
+}
+.eye-toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+.eye-toggle-btn:hover {
+    color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   FORM OPTIONS: REMEMBER ME & FORGOT PASSWORD
+   -------------------------------------------------------------------------- */
+.form-options-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.radio-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.radio-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    user-select: none;
+}
+.tc-text {
+    flex: 1;
+    line-height: 1.5;
+}
+
+/* Hide default checkbox/radio */
+.radio-label input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Custom visual checkbox (matches signup circle aesthetic) */
+.radio-custom {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px; /* Square with slight roundness for "Remember me" */
+    border: 2px solid rgba(255,255,255,0.2);
+    display: inline-block;
+    position: relative;
+    transition: var(--transition-base);
+    flex-shrink: 0;
+    margin-top: -1px;
+}
+
+/* Inner dot on check */
+.radio-custom::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--primary);
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.radio-label:hover input ~ .radio-custom {
+    border-color: rgba(0,184,255,0.5);
+}
+
+.radio-label input:checked ~ .radio-custom {
+    border-color: var(--primary);
+}
+
+.radio-label input:checked ~ .radio-custom::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.forgot-pass-link {
+    font-size: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   SUBMIT BUTTON & SIGNUP LINK
+   -------------------------------------------------------------------------- */
+.btn-submit-full {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.login-link-para {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-top: 1rem;
+}
+.text-link {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.text-link:hover {
+    color: #b848a2;
+    text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   LIGHT MODE OVERRIDES
+   The page background remains dark (fixed image), but the form adjusts 
+   if global setting goes light.
+   -------------------------------------------------------------------------- */
+[data-theme="light"] .login-glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(200, 200, 200, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .login-glass-card h2 {
+    color: #1e293b;
+}
+[data-theme="light"] .form-subheading {
+    color: #64748b;
+}
+
+[data-theme="light"] .form-group label,
+[data-theme="light"] .tc-text {
+    color: #475569;
+}
+
+[data-theme="light"] .form-group input[type="text"],
+[data-theme="light"] .form-group input[type="email"],
+[data-theme="light"] .form-group input[type="tel"],
+[data-theme="light"] .form-group input[type="password"],
+[data-theme="light"] .custom-select-wrap select {
+    background: #fff;
+    border-color: #cbd5e1;
+    color: #1e293b;
+}
+
+[data-theme="light"] .form-group input::placeholder {
+    color: #94a3b8;
+}
+
+[data-theme="light"] .custom-select-wrap select option {
+    background: #fff;
+    color: #1e293b;
+}
+
+[data-theme="light"] .custom-select-wrap select:focus,
+[data-theme="light"] .form-group input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0,184,255,0.15);
+    background: #fff;
+}
+
+[data-theme="light"] .radio-label {
+    color: #475569;
+}
+[data-theme="light"] .radio-custom {
+    border-color: #cbd5e1;
+}
+[data-theme="light"] .radio-label:hover input ~ .radio-custom {
+    border-color: rgba(0,184,255,0.5);
+}
+
+[data-theme="light"] .eye-toggle-btn {
+    color: #64748b;
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: 1024px
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .login-wrapper {
+        flex-direction: column;
+    }
+
+    .login-col-left {
+        justify-content: flex-start;
+        padding: 5rem 2rem 2rem;
+        flex: none;
+        align-items: center;
+        text-align: center;
+    }
+
+    .login-col-left .left-content-inner {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-logo {
+        margin-bottom: 2rem;
+    }
+
+    .btn-return-home {
+        top: 1.5rem;
+        left: 2rem;
+    }
+
+    /* Transform vertical line to horizontal line */
+    .login-separator {
+        width: 80%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, rgba(0,184,255,0.4), transparent);
+        margin: 0 auto;
+    }
+
+    .login-col-right {
+        padding: 2rem;
+        align-items: flex-start;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: 768px
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .login-heading {
+        font-size: 2.2rem;
+    }
+
+    .login-stats {
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    .stat-num {
+        font-size: 1.8rem;
+    }
+
+    .login-glass-card {
+        padding: 2.5rem 2rem;
+    }
+    
+    .form-options-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: 425.6px
+   -------------------------------------------------------------------------- */
+@media (max-width: 425.6px) {
+    .login-col-left {
+        padding: 4.5rem 1.2rem 1.5rem;
+    }
+    .btn-return-home {
+        top: 1.2rem;
+        left: 1.2rem;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .login-heading {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    .login-para {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+    
+    .login-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .login-col-right {
+        padding: 1.5rem 1.2rem 3rem;
+    }
+    
+    .login-glass-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .login-glass-card h2 {
+        font-size: 1.5rem;
+    }
+    .form-subheading {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   MEDIA QUERY: 375.2px
+   -------------------------------------------------------------------------- */
+@media (max-width: 375.2px) {
+    .btn-return-home {
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.8rem;
+    }
+
+    .login-logo img {
+        height: 40px;
+    }
+
+    .login-heading {
+        font-size: 1.6rem;
+    }
+
+    .login-glass-card {
+        padding: 2rem 1.2rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="tel"],
+    .form-group input[type="password"],
+    .custom-select-wrap select {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .btn-submit-full {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+}

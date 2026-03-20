@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portal | Stackly Security</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/clientDashboard.css">
+</head>
+<body>
+    <!-- Theme Initializer -->
+    <script>
+        const savedTheme = localStorage.getItem('site_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+
+    <!-- Global Loader -->
+    <div class="loader-overlay" id="pageLoader" aria-hidden="true" role="status">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <div class="dash-layout">
+        
+        <!-- ==========================================
+             SIDE NAVIGATION
+             ========================================== -->
+        <aside class="dash-sidebar" id="dashSidebar">
+            <div class="sidebar-logo">
+                <a href="../index.html">
+                    <img src="../assets/Home1/Header/logo.webp" alt="Stackly Security Logo" class="site-logo">
+                </a>
+            </div>
+            
+            <nav class="sidebar-nav" id="sidebarNav">
+                <button class="nav-item active" data-target="overview" aria-label="Go to Overview">
+                    <i class="fa-solid fa-chart-pie"></i> <span>Overview</span>
+                </button>
+                <button class="nav-item" data-target="active-defenses" aria-label="Go to Active Defenses">
+                    <i class="fa-solid fa-shield-virus"></i> <span>Active Defenses</span>
+                </button>
+                <button class="nav-item" data-target="incident-logs" aria-label="Go to Incident Logs">
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Incident Logs</span>
+                </button>
+                <button class="nav-item" data-target="api-tokens" aria-label="Go to API Tokens">
+                    <i class="fa-solid fa-key"></i> <span>API Tokens</span>
+                </button>
+                <button class="nav-item" data-target="settings" aria-label="Go to Settings">
+                    <i class="fa-solid fa-sliders"></i> <span>Settings</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-upgrade">
+                <h4>Enterprise Plan</h4>
+                <p>Unlock custom firewall rules & advanced DDoS protection.</p>
+                <button class="btn-dash client-action" onclick="location.href='./error.html'">Upgrade Plan</button>
+            </div>
+        </aside>
+
+        <!-- ==========================================
+             MAIN CONTENT WRAPPER
+             ========================================== -->
+        <div class="dash-main">
+            
+            <!-- TOPBAR -->
+            <header class="dash-topbar">
+                <a href="../index.html" class="mobile-top-logo"><img src="../assets/Home1/Header/logo.webp" alt="Stackly Logo"></a>
+                
+                <div class="client-subscription-status">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>Network Protected</span>
+                </div>
+                
+                <div class="topbar-actions">
+                    <button class="btn-dash outline-glow exit-btn" onclick="location.href='../index.html'" aria-label="Logout"><i class="fa-solid fa-power-off"></i> <span class="exit-text">Logout</span></button>
+                    <button class="icon-btn" aria-label="Support Tickets" onclick="location.href='./error.html'">
+                        <i class="fa-solid fa-headset"></i>
+                    </button>
+                    <button id="theme-toggle-btn" class="icon-btn" aria-label="Toggle Theme">
+                        <i class="fa-solid fa-sun"></i>
+                    </button>
+                    <div class="user-profile" onclick="location.href='./error.html'">
+                        <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                        <div class="user-info">
+                            <span class="user-name" id="displayEmail">Client User</span>
+                            <span class="user-role text-secondary">Client Node</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- CONTENT SECTIONS -->
+            <main class="dash-content-area">
+                
+                <!-- 1. OVERVIEW -->
+                <section id="overview" class="dash-section active">
+                    <div class="section-header-flex">
+                        <div class="section-text">
+                            <h2>Network Overview</h2>
+                            <p class="subtitle">High-level metrics and visual tracking of mitigated traffic on your domains.</p>
+                        </div>
+                        <button class="btn-dash outline-glow" aria-label="Generate Report" onclick="location.href='./error.html'"><i class="fa-solid fa-file-export" style="margin-right:8px;"></i> Export PDF</button>
+                    </div>
+
+                    <!-- Metrics -->
+                    <div class="metrics-row">
+                        <div class="metric-box">
+                            <i class="fa-solid fa-ban metric-icon text-primary"></i>
+                            <h4 class="metric-title">Traffic Blocked</h4>
+                            <div class="metric-value">14.2M</div>
+                            <span class="metric-sub text-success"><i class="fa-solid fa-arrow-up"></i> 8.4% from last week</span>
+                        </div>
+                        <div class="metric-box">
+                            <i class="fa-solid fa-cloud-arrow-up metric-icon text-secondary"></i>
+                            <h4 class="metric-title">API Requests Allowed</h4>
+                            <div class="metric-value">252K</div>
+                            <span class="metric-sub text-muted">Normal limits</span>
+                        </div>
+                        <div class="metric-box">
+                            <i class="fa-solid fa-globe metric-icon text-success"></i>
+                            <h4 class="metric-title">Clean Bandwidth</h4>
+                            <div class="metric-value">1.84 TB</div>
+                            <span class="metric-sub text-success"><i class="fa-solid fa-check-double"></i> Verified</span>
+                        </div>
+                    </div>
+
+                    <!-- Fully Occupied Area Chart (Requested) -->
+                    <div class="creative-widget widget-full">
+                        <div class="section-header-flex" style="margin-bottom: 10px;">
+                            <div>
+                                <h3>Shielded Traffic Output</h3>
+                                <p class="subtitle">Total volume of malicious packets scrubbed before hitting your servers.</p>
+                            </div>
+                        </div>
+                        <div class="chart-container-full">
+                            <canvas id="shieldGraph"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. ACTIVE DEFENSES -->
+                <section id="active-defenses" class="dash-section">
+                    <div class="section-header-flex">
+                        <div class="section-text">
+                            <h2>Active Defenses</h2>
+                            <p class="subtitle">Real-time status of your deployed Stackly security modules.</p>
+                        </div>
+                    </div>
+
+                    <div class="shield-grid">
+                        <div class="creative-widget widget-full">
+                            <h3 style="margin-bottom: 25px;">Module States</h3>
+                            <div class="shield-list">
+                                <div class="shield-item">
+                                    <div class="shield-info">
+                                        <div class="shield-icon"><i class="fa-solid fa-globe"></i></div>
+                                        <div class="shield-text">
+                                            <h4>Web Application Firewall (WAF)</h4>
+                                            <p>Scrubbing incoming HTTP/S traffic against OWASP Top 10.</p>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-active">Active</span>
+                                </div>
+                                <div class="shield-item">
+                                    <div class="shield-info">
+                                        <div class="shield-icon"><i class="fa-solid fa-robot"></i></div>
+                                        <div class="shield-text">
+                                            <h4>Bot Mitigation</h4>
+                                            <p>Challenging automated sweeps and scraping tools.</p>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-active">Active</span>
+                                </div>
+                                <div class="shield-item">
+                                    <div class="shield-info">
+                                        <div class="shield-icon" style="color:var(--text-muted);"><i class="fa-solid fa-water"></i></div>
+                                        <div class="shield-text">
+                                            <h4>L7 DDoS Absorption</h4>
+                                            <p>Advanced traffic routing for excessive payload delivery.</p>
+                                        </div>
+                                    </div>
+                                    <span class="badge badge-idle">Standby</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="defense-score-card">
+                            <div class="score-circle">
+                                <div class="score-inner">
+                                    <h2>92</h2>
+                                    <span>Score</span>
+                                </div>
+                            </div>
+                            <h3>Defense Posture</h3>
+                            <p class="subtitle" style="margin-bottom: 20px;">Your domain architecture is highly protected against current threat vectors.</p>
+                            <button class="btn-dash outline-glow" onclick="location.href='./error.html'">Run Re-Assessment</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. INCIDENT LOGS -->
+                <section id="incident-logs" class="dash-section">
+                    <div class="section-header-flex">
+                        <div class="section-text">
+                            <h2>Security Incident Logs</h2>
+                            <p class="subtitle">Chronological record of automated threat responses.</p>
+                        </div>
+                        <div class="search-container">
+                            <button class="btn-dash outline-glow" onclick="location.href='./error.html'">Go to Error Directory</button>
+                        </div>
+                    </div>
+
+                    <div class="creative-widget widget-full">
+                        <div class="log-timeline">
+                            
+                            <div class="log-entry log-danger">
+                                <div class="log-time">14:02 PM</div>
+                                <div class="log-node"><div class="node-circle"></div></div>
+                                <div class="log-content">
+                                    <h4>SQL Injection Mitigation</h4>
+                                    <p>Multiple malformed SQL queries detected targeting the /login endpoint. Source automatically blocked across all edge nodes.</p>
+                                </div>
+                            </div>
+
+                            <div class="log-entry">
+                                <div class="log-time">09:45 AM</div>
+                                <div class="log-node"><div class="node-circle"></div></div>
+                                <div class="log-content">
+                                    <h4>Unusual Traffic Spike</h4>
+                                    <p>Traffic rate exceeded baseline by 400%. Rate limiting algorithm engaged. Normalcy restored within 45 seconds.</p>
+                                </div>
+                            </div>
+
+                            <div class="log-entry">
+                                <div class="log-time">Yesterday</div>
+                                <div class="log-node"><div class="node-circle"></div></div>
+                                <div class="log-content">
+                                    <h4 style="color:var(--text-muted)">Routine Certificate Renewed</h4>
+                                    <p>SSL/TLS certificate for primary domain auto-renewed successfully.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. API TOKENS -->
+                <section id="api-tokens" class="dash-section">
+                    <div class="section-header-flex">
+                        <div class="section-text">
+                            <h2>API Token Management</h2>
+                            <p class="subtitle">Generate and revoke credentials for programmatic access to your analytics.</p>
+                        </div>
+                        <button class="btn-dash client-action" onclick="location.href='./error.html'"><i class="fa-solid fa-plus" style="margin-right:8px;"></i> Generate New Token</button>
+                    </div>
+
+                    <div class="creative-widget widget-full">
+                        <div class="api-token-box">
+                            <div class="api-token-info">
+                                <h4>Prod-SIEM-Ingest</h4>
+                                <p>Created: Jan 15, 2026 • Last Used: 2 minutes ago</p>
+                            </div>
+                            <div class="api-token-actions">
+                                <button class="btn-dash outline-glow" aria-label="Copy Token" onclick="location.href='./error.html'">Copy Key</button>
+                                <button class="btn-dash" style="background:var(--danger-color); color:#fff;" aria-label="Revoke Token" onclick="location.href='./error.html'">Revoke</button>
+                            </div>
+                        </div>
+
+                        <div class="api-token-box">
+                            <div class="api-token-info">
+                                4>Dev-Environment-Read</h4>
+                                <p>Created: Feb 02, 2026 • Last Used: 3 days ago</p>
+                            </div>
+                            <div class="api-token-actions">
+                                <button class="btn-dash outline-glow" aria-label="Copy Token" onclick="location.href='./error.html'">Copy Key</button>
+                                <button class="btn-dash outline-glow" style="border-color:var(--danger-color); color:var(--danger-color);" aria-label="Revoke Token" onclick="location.href='./error.html'">Revoke</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. SETTINGS -->
+                <section id="settings" class="dash-section">
+                    <form id="client-settings-form" class="section-header-flex" style="margin-bottom: 0;">
+                        <div class="section-text">
+                            <h2>Account Settings</h2>
+                            <p class="subtitle">Manage preferences, notifications, and billing.</p>
+                        </div>
+                        <button type="submit" class="btn-dash client-action" aria-label="Update Profile">Update Profile</button>
+                    </form>
+
+                    <div class="creative-widget widget-full" style="margin-top: 30px;">
+                        <h3 style="margin-bottom: 25px;">Profile Details</h3>
+                        <div class="settings-grid">
+                            
+                            <div class="settings-group">
+                                <label for="clientOrgName">Organization Name</label>
+                                <input type="text" value="Acme Corp Systems" class="dash-input" name="clientOrgName" id="clientOrgName" required autocomplete="organization">
+                            </div>
+
+                            <div class="settings-group">
+                                <label for="clientEmail">Primary Contact Email</label>
+                                <input type="email" value="admin@acme.com" class="dash-input" name="clientEmail" id="clientEmail" required autocomplete="email">
+                                <span id="client-email-error" style="color: var(--danger-color); font-size: 0.8rem; display: none; margin-top: 5px;">Invalid email format.</span>
+                            </div>
+                            
+                        </div>
+
+                        <hr style="border:none; border-top: 1px solid var(--border-color); margin: 30px 0;">
+
+                        <h3 style="margin-bottom: 25px;">Notification Preferences</h3>
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <label for="pref-alerts" style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem;">
+                                <input type="checkbox" id="pref-alerts" name="pref-alerts" autocomplete="off" checked style="width: 18px; height: 18px; accent-color: var(--secondary-accent);"> Send email on critical threats (DDoS, SQLi)
+                            </label>
+                            <label for="pref-reports" style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem;">
+                                <input type="checkbox" id="pref-reports" name="pref-reports" autocomplete="off" checked style="width: 18px; height: 18px; accent-color: var(--secondary-accent);"> Weekly automated PDF reports
+                            </label>
+                            <label for="pref-updates" style="display: flex; align-items: center; gap: 10px; cursor: pointer; color: var(--text-muted); font-size: 0.9rem;">
+                                <input type="checkbox" id="pref-updates" name="pref-updates" autocomplete="off" style="width: 18px; height: 18px; accent-color: var(--secondary-accent);"> Marketing and platform updates
+                            </label>
+                        </div>
+                        
+                        <div style="margin-top: 40px;">
+                            <button type="button" class="btn-dash" style="background:var(--danger-bg); color:var(--danger-color); border:1px solid var(--danger-color);" onclick="location.href='./error.html'">Request Account Deletion</button>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // 1. Loader & Email Setup
+        const loader = document.getElementById('pageLoader');
+        
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    loader.setAttribute('aria-hidden', 'true');
+                }, 400);
+            }, 600);
+            
+            // Set User Email from login page payload
+            const email = localStorage.getItem('loggedInEmail');
+            if (email) {
+                document.getElementById('displayEmail').textContent = email;
+            }
+        });
+
+        // Add loader to all valid links
+        document.querySelectorAll('button[onclick*="location.href"], a[href]').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const target = el.getAttribute('onclick') ? el.getAttribute('onclick').split("'")[1] : el.getAttribute('href');
+                if (target && !target.startsWith('#') && target !== '') {
+                    loader.style.display = 'flex';
+                    // Force reflow
+                    void loader.offsetWidth;
+                    loader.style.opacity = '1';
+                    loader.setAttribute('aria-hidden', 'false');
+                }
+            });
+        });
+
+        // BFCache safety
+        window.addEventListener('pageshow', (e) => {
+            if (e.persisted) {
+                loader.style.display = 'none';
+                loader.style.opacity = '0';
+                loader.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // 2. Theme Toggle Global Sync
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const htmlElement = document.documentElement;
+        
+        function updateThemeIcon() {
+            if (htmlElement.getAttribute('data-theme') === 'light') {
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+            }
+        }
+        updateThemeIcon();
+        
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('site_theme', newTheme);
+            updateThemeIcon();
+            updateChartColors(); 
+        });
+
+        // 3. Tab Routing via Sidebar
+        const navItems = document.querySelectorAll('.nav-item[data-target]');
+        const dashSections = document.querySelectorAll('.dash-section');
+
+        navItems.forEach(btn => {
+            btn.addEventListener('click', () => {
+                navItems.forEach(b => b.classList.remove('active'));
+                dashSections.forEach(s => s.classList.remove('active'));
+                
+                btn.classList.add('active');
+                const targetId = btn.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+                
+                // Allow chart canvas memory flush/resize
+                window.dispatchEvent(new Event('resize'));
+            });
+        });
+
+        // 4. Chart JS Implementations for Client Dashboard
+        let shieldGraph;
+
+        function initCharts() {
+            const ctxShield = document.getElementById('shieldGraph');
+            if(!ctxShield) return;
+
+            const isLight = htmlElement.getAttribute('data-theme') === 'light';
+            const textColor = isLight ? '#64748b' : '#94a3b8';
+            const gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+            const accentPurple = '#b848a2'; 
+
+            // Fill gradient for fully occupied area graph
+            let gradient = ctxShield.getContext('2d').createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(184, 72, 162, 0.5)');   
+            gradient.addColorStop(1, 'rgba(184, 72, 162, 0.0)');
+
+            shieldGraph = new Chart(ctxShield.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00'],
+                    datasets: [{
+                        label: 'Mitigated Attempts',
+                        data: [1200, 1900, 3000, 5000, 4800, 2200, 1500],
+                        borderColor: accentPurple,
+                        backgroundColor: gradient,
+                        borderWidth: 2,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: accentPurple,
+                        pointRadius: 3,
+                        pointHoverRadius: 6,
+                        fill: true, /* FULLY OCCUPIED GRAPH */
+                        tension: 0.4
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: { mode: 'index', intersect: false }
+                    }, 
+                    scales: { 
+                        x: { ticks: { color: textColor, font: {family:'Inter'} }, grid: { display: false } }, 
+                        y: { ticks: { color: textColor, font: {family:'Inter'} }, grid: { color: gridColor } } 
+                    },
+                    interaction: { mode: 'nearest', axis: 'x', intersect: false }
+                }
+            });
+        }
+
+        function updateChartColors() {
+            if(!shieldGraph) return;
+            const isLight = htmlElement.getAttribute('data-theme') === 'light';
+            const textColor = isLight ? '#64748b' : '#94a3b8';
+            const gridColor = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+
+            shieldGraph.options.scales.x.ticks.color = textColor;
+            shieldGraph.options.scales.y.ticks.color = textColor;
+            shieldGraph.options.scales.y.grid.color = gridColor;
+            shieldGraph.update();
+        }
+
+        document.addEventListener('DOMContentLoaded', initCharts);
+
+        // 5. Form validations
+        const settingsForm = document.getElementById('client-settings-form');
+        const settingsEmailInput = document.getElementById('clientEmail');
+        const settingsEmailError = document.getElementById('client-email-error');
+
+        if (settingsForm) {
+            settingsForm.addEventListener('submit', function(e) {
+                e.preventDefault(); 
+                const emailValue = settingsEmailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                if (!emailRegex.test(emailValue)) {
+                    settingsEmailError.style.display = 'block';
+                    settingsEmailInput.style.borderColor = 'var(--danger-color)';
+                } else {
+                    settingsEmailError.style.display = 'none';
+                    settingsEmailInput.style.borderColor = '';
+                    location.href = './error.html';
+                }
+            });
+            settingsEmailInput.addEventListener('input', () => { settingsEmailError.style.display = 'none'; settingsEmailInput.style.borderColor = ''; });
+        }
+
+    </script>
+</body>
+</html>
