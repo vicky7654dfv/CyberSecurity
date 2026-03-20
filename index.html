@@ -246,6 +246,47 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Animated Image Duo Row -->
+            <div class="container about-anim-row fade-in-up" style="transition-delay: 0.35s;">
+
+                <!-- Image 1: Floating drift effect -->
+                <div class="anim-img-card anim-float">
+                    <div class="anim-img-border">
+                        <img src="./assets/Home1/side1.webp" alt="Active Threat Detection">
+                        <!-- Unhovered: small description -->
+                        <p class="anim-card-desc">Continuous deep packet inspection across all entry points, identifying malicious patterns in real-time before they reach your infrastructure.</p>
+                        <!-- Hovered: 2 action buttons -->
+                        <div class="anim-card-hover-overlay">
+                            <a href="./pages/error.html" class="btn btn-primary">Learn More</a>
+                            <a href="./pages/error.html" class="btn btn-outline-light">View Reports</a>
+                        </div>
+                        <div class="anim-img-label">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <span>Active Threat Detection</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 2: Perspective tilt / depth glow effect -->
+                <div class="anim-img-card anim-tilt">
+                    <div class="anim-img-border">
+                        <img src="./assets/Home1/side2.webp" alt="Encrypted Data Pipeline">
+                        <!-- Unhovered: small description -->
+                        <p class="anim-card-desc">End-to-end AES-256 encrypted tunnels protecting every packet in transit, ensuring zero interception across public and private networks.</p>
+                        <!-- Hovered: 2 action buttons -->
+                        <div class="anim-card-hover-overlay">
+                            <a href="./pages/error.html" class="btn btn-primary">Explore Encryption</a>
+                            <a href="./pages/error.html" class="btn btn-outline-light">Get Audit</a>
+                        </div>
+                        <div class="anim-img-label">
+                            <i class="fa-solid fa-lock"></i>
+                            <span>Encrypted Data Pipeline</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </section>
 
         <!-- Section 5: Stats & Protection Model -->
@@ -254,7 +295,30 @@
                 <h1 class="live-underline">Our End-to-End Protection Model</h1>
                 <p class="max-w-md mx-auto mt-3">Leveraging empirical data and proactive algorithms to guarantee unrivaled system uptime and absolute data integrity.</p>
             </div>
-            <div class="container stats-grid mt-5">
+
+            <!-- Flip Carousel Implementation -->
+            <div class="container mb-5 fade-in-up" style="transition-delay: 0.1s;">
+                <div class="flip-carousel-container" id="flipCarousel" style="max-width: 800px; margin: 0 auto; width: 100%;">
+                    <div class="flip-carousel-inner">
+                        <div class="flip-slide active">
+                            <img src="./assets/Home1/im1.webp" alt="End-to-End Protection Phase 1">
+                        </div>
+                        <div class="flip-slide">
+                            <img src="./assets/Home1/im2.webp" alt="End-to-End Protection Phase 2">
+                        </div>
+                        
+                        <div class="carousel-overlay">
+                            <button class="btn btn-primary" onclick="location.href='./pages/error.html'">Discover Architecture</button>
+                        </div>
+                    </div>
+                    
+                    <div class="play-indicator" aria-label="Auto-playing">
+                        <i class="fa-solid fa-play"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container stats-grid mt-4">
                 <div class="live-border-container fade-in-up" style="transition-delay: 0.1s;">
                     <div class="stat-box">
                         <h2><span class="count-up" data-val="99.9">0</span><span class="stat-suffix">%</span></h2>
@@ -423,13 +487,43 @@
 
         window.addEventListener('load', hideLoader);
 
-        // Hide loader when page is loaded from back/forward cache
+        // Hide loader when page is loaded        // BFCache Loader reset
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                hideLoader();
+                loader.classList.remove('visible');
             }
         });
 
+        // Flip Carousel Logic for End-to-End Section
+        const flipCarousel = document.getElementById('flipCarousel');
+        if(flipCarousel) {
+            const slides = flipCarousel.querySelectorAll('.flip-slide');
+            let currentFIdx = 0;
+            let flipTimer;
+            
+            function nextFlipSlide() {
+                const current = slides[currentFIdx];
+                current.classList.remove('active');
+                current.classList.add('inactive');
+                
+                currentFIdx = (currentFIdx + 1) % slides.length;
+                const next = slides[currentFIdx];
+                next.classList.remove('inactive');
+                next.classList.add('active');
+            }
+            
+            function startFlip() {
+                flipTimer = setInterval(nextFlipSlide, 2500); // 2.5s auto-play
+            }
+            function stopFlip() {
+                clearInterval(flipTimer);
+            }
+            
+            startFlip();
+            flipCarousel.addEventListener('mouseenter', stopFlip);
+            flipCarousel.addEventListener('mouseleave', startFlip);
+        }
+        
         // Show loader when clicking valid navigation links
         document.querySelectorAll('a[href]').forEach(link => {
             link.addEventListener('click', (e) => {
