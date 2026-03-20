@@ -299,6 +299,7 @@
             <!-- Flip Carousel Implementation -->
             <div class="container mb-5 fade-in-up" style="transition-delay: 0.1s;">
                 <div class="flip-carousel-container" id="flipCarousel" style="max-width: 800px; margin: 0 auto; width: 100%;">
+                    <!-- 3D flip inner — slides only, overlay is sibling below -->
                     <div class="flip-carousel-inner">
                         <div class="flip-slide active">
                             <img src="./assets/Home1/im1.webp" alt="End-to-End Protection Phase 1">
@@ -306,10 +307,11 @@
                         <div class="flip-slide">
                             <img src="./assets/Home1/im2.webp" alt="End-to-End Protection Phase 2">
                         </div>
-                        
-                        <div class="carousel-overlay">
-                            <button class="btn btn-primary" onclick="location.href='./pages/error.html'">Discover Architecture</button>
-                        </div>
+                    </div>
+
+                    <!-- Overlay lives OUTSIDE preserve-3d so pointer events work on ALL edges -->
+                    <div class="carousel-overlay">
+                        <button class="btn btn-primary" onclick="sessionStorage.setItem('homeScrollY', window.scrollY); location.href='./pages/error.html'">Discover Architecture</button>
                     </div>
                     
                     <div class="play-indicator" aria-label="Auto-playing">
@@ -487,10 +489,18 @@
 
         window.addEventListener('load', hideLoader);
 
-        // Hide loader when page is loaded        // BFCache Loader reset
+        // BFCache Loader reset — fires when browser navigates back from a cached page
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                loader.classList.remove('visible');
+                // Immediately kill loader (page came from bfcache, no re-load needed)
+                loader.style.opacity = '0';
+                loader.style.display = 'none';
+                // Restore scroll position
+                const savedScroll = sessionStorage.getItem('homeScrollY');
+                if (savedScroll !== null) {
+                    window.scrollTo({ top: parseInt(savedScroll, 10), behavior: 'instant' });
+                    sessionStorage.removeItem('homeScrollY');
+                }
             }
         });
 
@@ -524,7 +534,7 @@
             flipCarousel.addEventListener('mouseleave', startFlip);
         }
         
-        // Show loader when clicking valid navigation links
+        // Show loader & save scroll position when clicking valid navigation links
         document.querySelectorAll('a[href]').forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
@@ -532,8 +542,17 @@
                 
                 // Allow hash links, JS links, empty links, and new tabs without loader
                 if (href && !href.startsWith('#') && !href.startsWith('javascript:') && target !== '_blank') {
+                    // Save current scroll so back button can restore it
+                    sessionStorage.setItem('homeScrollY', window.scrollY);
                     showLoader();
                 }
+            });
+        });
+
+        // Also save scroll for buttons that use onclick="location.href"
+        document.querySelectorAll('button[onclick*="location.href"]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                sessionStorage.setItem('homeScrollY', window.scrollY);
             });
         });
 

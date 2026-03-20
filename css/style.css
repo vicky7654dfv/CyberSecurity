@@ -1101,6 +1101,7 @@ section {
 }
 .flip-carousel-inner {
     width: 100%; height: 100%; position: relative; transform-style: preserve-3d;
+    pointer-events: none; /* Disabling pointer events so slides don't block the overlay */
 }
 .flip-slide {
     position: absolute;
@@ -1140,6 +1141,7 @@ section {
     display: flex; align-items: center; justify-content: center;
     opacity: 0; transition: opacity 0.3s ease;
     z-index: 10;
+    pointer-events: auto; /* Ensure overlay captures mouse */
 }
 .flip-carousel-container:hover .carousel-overlay {
     opacity: 1;
@@ -1147,6 +1149,15 @@ section {
 .carousel-overlay .btn {
     transform: translateY(20px);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative; /* needed for ::before */
+    z-index: 20; /* High z-index to stay on top */
+    pointer-events: auto;
+}
+.carousel-overlay .btn::before {
+    content: '';
+    position: absolute;
+    inset: -20px; /* Increased hit-area extension to 20px for maximum sensitivity */
+    cursor: pointer;
 }
 .flip-carousel-container:hover .carousel-overlay .btn {
     transform: translateY(0);
